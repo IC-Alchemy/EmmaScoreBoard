@@ -110,7 +110,7 @@ function calculateResponsiveSizes() {
   // Base sizes off viewport width
   baseTextSize = min(width, height) * 0.02;  // 3% of smallest screen dimension
   titleTextSize = min(width, height) * 0.05;  // 5% of smallest screen dimension
-  scoreTextSize = min(width, height) * 0.05;  // 15% of smallest screen dimension
+  scoreTextSize = min(width, height) * 0.35;  // 15% of smallest screen dimension
   buttonTextSize = min(width, height) * 0.04;  // 4% of smallest screen dimension
 }
 
@@ -183,32 +183,36 @@ function draw() {
   
   // Draw Emma's score and name
   fill(0);
-  textSize(scoreTextSize);
-  text(emmaScore, width/4, height/3);
   textSize(titleTextSize);
   
   // Break text into multiple lines on small screens
   if (width < 600) {
-    text("Emma", width/4, height/3 - scoreTextSize);
-    text("and", width/4, height/3 - scoreTextSize/2);
-    text("Arcade", width/4, height/3 - scoreTextSize/4);
+    text("Emma", width/4, height/6);
+    text("and", width/4, height/6 + titleTextSize);
+    text("Arcade", width/4, height/6 + titleTextSize * 2);
   } else {
-    text("Emma and Arcade", width/4, height/3 - scoreTextSize/2);
+    text("Emma and Arcade", width/4, height/6);
   }
   
-  // Draw Nate's score and name
+  // Draw Emma's score lower on screen
   textSize(scoreTextSize);
-  text(nateScore, 3*width/4, height/3);
+  text(emmaScore, width/4, height * 0.7);
+  
+  // Draw Nate's name
   textSize(titleTextSize);
   
   // Break text into multiple lines on small screens
   if (width < 600) {
-    text("Nate", 3*width/4, height/3 - scoreTextSize);
-    text("and", 3*width/4, height/3 - scoreTextSize/2);
-    text("Bowling", 3*width/4, height/3 - scoreTextSize/4);
+    text("Nate", 3*width/4, height/6);
+    text("and", 3*width/4, height/6 + titleTextSize);
+    text("Bowling", 3*width/4, height/6 + titleTextSize * 2);
   } else {
-    text("Nate and Bowling", 3*width/4, height/3 - scoreTextSize/2);
+    text("Nate and Bowling", 3*width/4, height/6);
   }
+  
+  // Draw Nate's score lower on screen
+  textSize(scoreTextSize);
+  text(nateScore, 3*width/4, height * 0.7);
   
   resetButton.display();
   
