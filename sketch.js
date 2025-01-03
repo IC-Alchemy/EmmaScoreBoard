@@ -108,9 +108,9 @@ class Button {
 
 function calculateResponsiveSizes() {
   // Base sizes off viewport width
-  baseTextSize = min(width, height) * 0.03;  // 3% of smallest screen dimension
+  baseTextSize = min(width, height) * 0.02;  // 3% of smallest screen dimension
   titleTextSize = min(width, height) * 0.05;  // 5% of smallest screen dimension
-  scoreTextSize = min(width, height) * 0.15;  // 15% of smallest screen dimension
+  scoreTextSize = min(width, height) * 0.05;  // 15% of smallest screen dimension
   buttonTextSize = min(width, height) * 0.04;  // 4% of smallest screen dimension
 }
 
