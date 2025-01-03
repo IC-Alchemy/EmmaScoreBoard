@@ -188,8 +188,8 @@ function draw() {
   // Break text into multiple lines on small screens
 
     text("Emma", width/4, height/6);
-    text("and", width/4, height/6 + titleTextSize);
-    text("Arcade", width/4, height/6 + titleTextSize * 2);
+ //   text("and", width/4, height/6 + titleTextSize);
+   // text("Arcade", width/4, height/6 + titleTextSize * 2);
   
   
   // Draw Emma's score lower on screen
@@ -201,9 +201,9 @@ function draw() {
   
   // Break text into multiple lines on small screens
 
-    text("Nate", 3*width/4, height/6);
-    text("and", 3*width/4, height/6 + titleTextSize);
-    text("Bowling", 3*width/4, height/6 + titleTextSize * 2);
+    text("Nana", 3*width/4, height/6);
+  // text("and", 3*width/4, height/6 + titleTextSize);
+   // text("Bowling", 3*width/4, height/6 + titleTextSize * 2);
   
   
   // Draw Nate's score lower on screen
