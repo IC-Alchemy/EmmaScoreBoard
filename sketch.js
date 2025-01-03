@@ -9,15 +9,20 @@ let fireworks = [];
 let celebrating = false;
 let lastWinner = '';
 let fireTime=200;
+let baseTextSize;
+let titleTextSize;
+let scoreTextSize;
+let buttonTextSize;
+
 class Particle {
   constructor(x, y, color) {
-    this.x = x;
+this.x = x;
     this.y = y;
     this.color = color;
     this.vx = random(-8, 8);
     this.vy = random(-15, -5);
     this.alpha = 255;
-    this.size = random(8, 16);
+    this.size = random(4, 12);
   }
 
   update() {
@@ -47,7 +52,7 @@ class Firework {
   }
 
   addParticles() {
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 24; i++) {
       this.particles.push(new Particle(this.x, this.y, this.color));
     }
   }
@@ -89,7 +94,7 @@ class Button {
     rect(this.x, this.y, this.w, this.h, 5);
     fill(0);
     noStroke();
-    textSize(32);
+    textSize(buttonTextSize);
     textAlign(CENTER, CENTER);
     text(this.text, this.x + this.w/2, this.y + this.h/2);
     pop();
@@ -101,13 +106,32 @@ class Button {
   }
 }
 
+function calculateResponsiveSizes() {
+  // Base sizes off viewport width
+  baseTextSize = min(width, height) * 0.03;  // 3% of smallest screen dimension
+  titleTextSize = min(width, height) * 0.05;  // 5% of smallest screen dimension
+  scoreTextSize = min(width, height) * 0.15;  // 15% of smallest screen dimension
+  buttonTextSize = min(width, height) * 0.04;  // 4% of smallest screen dimension
+}
+
 function setup() {
   createCanvas(windowWidth, windowHeight);
   textAlign(CENTER, CENTER);
-  textSize(32);
-  resetButton = new Button(width/2 - 75, height/2 + 20, 150, 60, "Reset");
-  emmaColor = color(0, 128, 128, 100); // Teal with transparency
-  nateColor = color(255, 0, 0, 100);   // Red with transparency
+  calculateResponsiveSizes();
+  
+  // Adjust button size based on screen size
+  let buttonWidth = min(150, width * 0.3); // Either 150px or 30% of width
+  let buttonHeight = min(60, height * 0.1); // Either 60px or 10% of height
+  resetButton = new Button(
+    width/2 - buttonWidth/2, 
+    height/2 + buttonHeight/3, 
+    buttonWidth, 
+    buttonHeight, 
+    "Reset"
+  );
+  
+  emmaColor = color(0, 128, 128, 100);
+  nateColor = color(255, 0, 0, 100);
 }
 
 function checkWinner() {
@@ -159,21 +183,35 @@ function draw() {
   
   // Draw Emma's score and name
   fill(0);
-  textSize(128);
+  textSize(scoreTextSize);
   text(emmaScore, width/4, height/3);
-  textSize(72);
-  text("Emma and Arcade", width/4, height/3 - 100);
+  textSize(titleTextSize);
+  
+  // Break text into multiple lines on small screens
+  if (width < 600) {
+    text("Emma", width/4, height/3 - scoreTextSize);
+    text("and", width/4, height/3 - scoreTextSize/2);
+    text("Arcade", width/4, height/3 - scoreTextSize/4);
+  } else {
+    text("Emma and Arcade", width/4, height/3 - scoreTextSize/2);
+  }
   
   // Draw Nate's score and name
-  fill(0);
-  textSize(128);
+  textSize(scoreTextSize);
   text(nateScore, 3*width/4, height/3);
-  textSize(72);
-  text("Nate and Bowling", 3*width/4, height/3 - 100);
+  textSize(titleTextSize);
   
-  // Display reset button
+  // Break text into multiple lines on small screens
+  if (width < 600) {
+    text("Nate", 3*width/4, height/3 - scoreTextSize);
+    text("and", 3*width/4, height/3 - scoreTextSize/2);
+    text("Bowling", 3*width/4, height/3 - scoreTextSize/4);
+  } else {
+    text("Nate and Bowling", 3*width/4, height/3 - scoreTextSize/2);
+  }
+  
   resetButton.display();
-
+  
   // Update and draw fireworks
   for (let i = fireworks.length - 1; i >= 0; i--) {
     fireworks[i].draw();
@@ -181,8 +219,7 @@ function draw() {
       fireworks.splice(i, 1);
     }
   }
-
-  // Check for winner
+  
   checkWinner();
 }
 
@@ -207,4 +244,20 @@ function mousePressed() {
       setTimeout(() => { canScore = true; }, cooldownTime);
     }
   }
+}
+
+function windowResized() {
+  resizeCanvas(windowWidth, windowHeight);
+  calculateResponsiveSizes();
+  
+  // Recalculate button position and size
+  let buttonWidth = min(150, width * 0.3);
+  let buttonHeight = min(60, height * 0.1);
+  resetButton = new Button(
+    width/2 - buttonWidth/2, 
+    height/2 + buttonHeight/3, 
+    buttonWidth, 
+    buttonHeight, 
+    "Reset"
+  );
 }
